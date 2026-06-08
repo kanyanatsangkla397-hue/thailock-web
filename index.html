@@ -6,6 +6,252 @@
     <title>THAI LOCK</title>
 
     <style>
+
+        /* PAGE SLIDER */
+
+        .page-slider{
+            width:100%;
+            overflow:hidden;
+        }
+
+        .pages{
+            display:flex;
+            width:200vw;
+
+            transition:0.8s ease;
+        }
+
+        .page{
+            width:100vw;
+            min-height:100vh;
+
+            position:relative;
+            flex-shrink:0;
+        }
+
+        .page-overlay{
+            position:absolute;
+            inset:0;
+
+            background:rgba(0,0,0,.35);
+        }
+
+        .company-wrapper{
+            display:flex;
+            justify-content:center;
+            align-items: stretch;
+            gap:60px;
+            flex-wrap:wrap;
+        }
+
+        .products-page{
+            background:
+            linear-gradient(
+                135deg,
+                #00144d,
+                #0b58d8
+            );
+
+            color:white;
+        }
+
+        .products-content{
+            height:100%;
+
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+
+            padding:80px;
+        }
+
+        .products-content h2{
+            text-align:center;
+            font-size:60px;
+            margin-bottom:60px;
+        }
+
+        .page-btn{
+            position:absolute;
+            top:50%;
+
+            transform:translateY(-50%);
+
+            width:70px;
+            height:70px;
+
+            border:none;
+            border-radius:50%;
+
+            background:rgba(255,255,255,.2);
+
+            color:white;
+            font-size:35px;
+
+            cursor:pointer;
+
+            z-index:100;
+        }
+
+        .next-btn{
+            right:30px;
+        }
+
+        .prev-btn{
+            left:30px;
+        }
+
+        /* 3 กล่อง */
+        .about-content{
+            position: relative;
+            z-index: 2;
+
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            padding: 80px;
+        }
+
+        .about-content h2{
+            text-align: center;
+            font-size: 60px;
+            margin-bottom: 60px;
+        }
+
+        .company-card{
+            width: 350px;
+            flex: 0 0 350px;
+            min-height: 550px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+
+            background: rgba(0,0,0,0.45);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 30px;
+            color: white;
+
+        }
+
+        .company-card:hover{
+            transform: translateY(-10px);
+        }
+
+        .company-logo{
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+
+            display: block;
+            margin: 0 auto 20px;
+        }
+
+        .company-card h3{
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 0;
+            font-size: 22px;
+        }
+
+        .factory-img{
+            width: 100%;
+            margin-top: auto;
+            border-radius: 12px;
+        }
+
+        .company-card ul{
+            list-style: none;
+            padding: 0;
+        }
+
+        .company-card li{
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .company-card li::before{
+            content: "• ";
+            color: #4da3ff;
+            font-weight: bold;
+        }
+
+        .factory-img{
+            width: 100%;
+            margin-top: 20px;
+
+            border-radius: 12px;
+        }
+
+        .slider-container{
+            position: relative;
+            width: 100%;
+            margin-top: 60px;
+            overflow: visible;
+        }
+
+        .next{
+            right: 20px;
+        }
+
+        .prev{
+            left: 20px;
+        }
+
+        .group-companies{
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 50px;
+
+            overflow-x: auto;
+
+            padding: 20px 0px;
+        }
+
+        .slide-btn{
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+
+            width: 60px;
+            height: 60px;
+
+            border: none;
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+
+            color: white;
+            font-size: 30px;
+
+            cursor: pointer;
+
+            z-index: 100;
+
+            transition: .3s;
+        }
+
+        .slide-btn:hover{
+            background: #0b58d8;
+        }
+
+        .prev{
+            left: 0;
+        }
+
+        .next{
+            right: 0;
+        }
+
+        .group-companies::-webkit-scrollbar{
+            display:none;
+        }
+
         .navbar {
             position: fixed;
             top: 0px;
@@ -568,7 +814,9 @@ html{scroll-behavior: smooth;
 }
 
     </style>
+    
 </head>
+
 
 <body>
 
@@ -672,18 +920,140 @@ html{scroll-behavior: smooth;
 
 </div>  
 <!-- หน้าที่2 -->
-<section class="about-section">
+<!-- SECTION 2 + SECTION 3 -->
+<section class="page-slider">
 
-    <video autoplay muted loop playsinline class="about-video">
-        <source src="out.mp4" type="video/mp4">
-    </video>
+    <div class="pages" id="pages">
 
-    <div class="about-content">
-        <h2>GROUP COMPANIES</h2>
-        <p>Professional Lock Nut Manufacturer Since 1991</p>
+        <!-- PAGE 2 -->
+        <div class="page">
+
+            <video autoplay muted loop playsinline class="about-video">
+                <source src="out.mp4" type="video/mp4">
+            </video>
+
+            <div class="page-overlay"></div>
+
+            <div class="about-content">
+
+                <h2>GROUP COMPANIES</h2>
+
+                <div class="company-wrapper">
+
+                    <div class="company-card">
+                        <img src="jingfong-logo.png" class="company-logo">
+                        <h3>JING FONG INDUSTRY</h3>
+
+                        <ul>
+                            <li>OEM / Special Nuts</li>
+                            <li>Tainan, Taiwan</li>
+                            <li>Capacity: >1,000 Tons / Month</li>
+                        </ul>
+                    </div>
+
+                    <div class="company-card">
+                        <img src="TL 1.png" class="company-logo">
+                        <h3>THAILOCK FASTENERS</h3>
+
+                        <ul>
+                            <li>Standard / OEM Fasteners</li>
+                            <li>2 Plants at Chonburi & Rayong</li>
+                            <li>Area: 70,000 m²</li>
+                        </ul>
+                    </div>
+
+                    <div class="company-card">
+                        <img src="thaimax-logo.png" class="company-logo">
+                        <h3>THAIMAX PLASTICS</h3>
+
+                        <ul>
+                            <li>Plastic Injection Parts</li>
+                            <li>Compound Material</li>
+                            <li>Rayong, Thailand</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <button class="page-btn next-btn">
+                    ❯
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- PAGE 3 -->
+        <div class="page products-page">
+
+            <button class="page-btn prev-btn">
+                ❮
+            </button>
+
+            <div class="products-content">
+
+                <h2>OUR PRODUCTS</h2>
+
+                <div class="company-wrapper">
+
+                    <div class="company-card">
+                        <h3>LOCK NUTS</h3>
+                    </div>
+
+                    <div class="company-card">
+                        <h3>HEX NUTS</h3>
+                    </div>
+
+                    <div class="company-card">
+                        <h3>SPECIAL FASTENERS</h3>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
 </section>
+
+<script>
+const slider = document.getElementById("companySlider");
+
+document.querySelector(".next").addEventListener("click", () => {
+    slider.scrollBy({
+        left: 470,
+        behavior: "smooth"
+    });
+});
+
+document.querySelector(".prev").addEventListener("click", () => {
+    slider.scrollBy({
+        left: -470,
+        behavior: "smooth"
+    });
+});
+</script>
+
+<script>
+
+const pages = document.getElementById("pages");
+
+document.querySelector(".next-btn").addEventListener("click", () => {
+
+    pages.style.transform = "translateX(-100vw)";
+
+});
+
+document.querySelector(".prev-btn").addEventListener("click", () => {
+
+    pages.style.transform = "translateX(0)";
+
+});
+
+</script>
+
 
 <script>
 let lastScrollTop = 0;
