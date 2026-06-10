@@ -27,6 +27,8 @@
 
             position:relative;
             flex-shrink:0;
+
+            overflow: hidden;
         }
 
         .page-overlay{
@@ -34,6 +36,7 @@
             inset:0;
 
             background:rgba(0,0,0,.35);
+            z-index: 1;
         }
 
         .company-wrapper{
@@ -103,10 +106,14 @@
             margin-bottom:60px;
         }
 
-        .page-btn{
-            position:absolute;
-            top:50%;
+        .products-page{
+            position: relative;
+            min-height: 100vh;
+        }
 
+        .page-btn{
+            position:fixed;
+            top:50%;
             transform:translateY(-50%);
 
             width:70px;
@@ -116,13 +123,16 @@
             border-radius:50%;
 
             background:rgba(255,255,255,.2);
-
             color:white;
             font-size:35px;
 
             cursor:pointer;
 
-            z-index:100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            z-index:9999;
         }
 
         .next-btn{
@@ -131,6 +141,11 @@
 
         .prev-btn{
             left:30px;
+        }
+
+        .prev-btn,
+        .next-btn{
+            z-index: 9999;
         }
 
         /* 3 กล่อง */
@@ -343,7 +358,7 @@
         }
 
         .language-switch a {
-            color: black;
+            color: rgb(251, 248, 248);
             text-decoration: none;
             font-size: 20px;
             font-weight: bold;
@@ -409,13 +424,11 @@
             font-family: Arial, sans-serif;
             transition: 0.3s;
 
-            -webkit-text-stroke: 0.5px #000;
-
             transition: 0.1s;
         }
 
         .nav-menu li a:hover {
-            color: #ffd700;
+            color: #2f32f4;
         }
         * {
             margin: 0;
@@ -423,21 +436,25 @@
             box-sizing: border-box;
         }
 
+    .hero-video{
+        position:absolute;
+        top:0;
+        left:0;
+
+        width:100%;
+        height:100%;
+
+        object-fit:cover;
+
+        z-index:0;
+    }
+
+
     .video-container {
         position: relative;
         width: 100%;
-        min-height: 130vh;
-        padding-bottom: 300px;
+        min-height: 100vh;
         overflow: hidden;
-
-        background: linear-gradient(
-            120deg,
-            #00144d 0%,
-            #002c80 30%,
-            #0b58d8 55%,
-            #f5f7fb 55%,
-            #ffffff 100%
-        );
     }
 
 .video-container::before {
@@ -469,7 +486,7 @@
     padding-top: 180px;
     padding-left: 60px;
 
-    max-width: 700px;
+    max-width: 800px;
 }
 
 
@@ -593,46 +610,6 @@
     object-fit: cover;
 }
 
-.video-container::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-
-    width: 100%;
-    height: 300px;
-
-    background: 
-        linear-gradient(
-            to bottom,
-            rgba(255, 255, 255, 0) 0%,
-            rgba(255,255,255,0.2) 40%,
-            rgba(255,255,255,0.6) 75%,
-            rgba(255,255,255,1) 100%
-        );
-
-    z-index: 20;
-    pointer-events: none;
-}
-
-.about-section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 250px;
-
-    background: linear-gradient(
-        to bottom,
-        rgba(255,255,255,0.9),
-        rgba(255,255,255,0)
-    );
-
-    z-index: 1;
-}
-
 .about-content h2 {
     font-size: 60px;
 }
@@ -648,14 +625,17 @@ html{scroll-behavior: smooth;
 
 .hero-image {
     position: absolute;
-    right: 0px;
-    top: 250px;
-    z-index: 5;
+    right: 20px;
+    top: 180px;
+    width: 45%;
+    display: flex;
+    justify-content: center;
+    z-index: 10;
 }
 
 .hero-image img {
-    width: 1000px;
-    max-width: 100%;
+    width: 100%;
+    max-width: 700px;
     height: auto;
 
     transform: rotate(-8deg); 
@@ -707,8 +687,11 @@ html{scroll-behavior: smooth;
 }
 
 .history-section{
+    position: relative;
+    z-index: 1;
 
-    padding: 100px 80px 80px;
+    padding: 100px 80px;
+    height: 100px 80px;
 
     background:
     linear-gradient(
@@ -871,6 +854,31 @@ html{scroll-behavior: smooth;
     font-size:36px;
 
     margin-bottom:10px;
+
+}
+
+@media (max-width:1200px){
+
+    .hero-content{
+        width:55%;
+    }
+
+    .hero-image{
+        width:45%;
+        top:220px;
+    }
+
+    .hero-image img{
+        max-width:550px;
+    }
+
+    .content h1{
+        font-size:42px;
+    }
+
+    .content p{
+        font-size:18px;
+    }
 
 }
 
@@ -1102,6 +1110,12 @@ html{scroll-behavior: smooth;
 
 <div class="video-container" id="home">
 
+    <video autoplay muted loop playsinline class="hero-video">
+        <source src="ล่าสุด (1).mp4" type="video/mp4">
+    </video>
+
+    <div class="page-overlay"></div>
+
     <!-- แถบด้านบน -->
     <nav class="navbar">
 
@@ -1193,11 +1207,11 @@ html{scroll-behavior: smooth;
 
         </div>
     </div>
-
+<!--
     <div class="hero-image">
-        <img src="nut.png" alt="THAILOCK Product">
+        <img src="nuts_transparent.png" alt="THAILOCK Product">
     </div>
-
+-->
 </div>  
 <!-- หน้าที่2 -->
 <!-- SECTION 2 + SECTION 3 -->
@@ -1266,9 +1280,6 @@ html{scroll-behavior: smooth;
         <!-- PAGE 3 -->
         <div class="page products-page">
 
-            <button class="page-btn prev-btn">
-                ❮
-            </button>
         
 
 <section class="history-section">
@@ -1320,6 +1331,10 @@ html{scroll-behavior: smooth;
     </div>
 
 </section>
+
+<button class="page-btn prev-btn">
+    ❮
+</button>
 
 </div>
 </div>
