@@ -8,7 +8,7 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { font-family: Arial, sans-serif; overflow-x: hidden; }
+body { font-family: Arial, sans-serif; overflow-x: hidden; background: #000814; }
 
 /* NAVBAR */
 .navbar {
@@ -58,18 +58,55 @@ body { font-family: Arial, sans-serif; overflow-x: hidden; }
 .zero-content p { font-size: clamp(18px, 2vw, 26px); line-height: 1.7; margin-bottom: 0; }
 
 /* PAGE 1-3 HORIZONTAL SLIDER */
-.horizontal-slider { position: relative; width: 100%; height: 100vh; overflow: hidden; }
-.pages { display: flex; width: 300vw; height: 100vh; transition: transform 0.8s ease; }
-.page { position: relative; width: 100vw; height: 100vh; flex-shrink: 0; overflow: hidden; }
+.horizontal-slider {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 100vh;
+    overflow: hidden;
+    background: #000814;
+}
+.pages {
+    display: flex;
+    width: 300vw;
+    height: 100%;
+    min-height: 100vh;
+    transition: transform 0.8s ease;
+}
+.page {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    min-height: 100vh;
+    flex-shrink: 0;
+    overflow: hidden;
+    background: #000814;
+}
 
 /* HERO PAGE 1.1 */
-.video-container { display: flex; align-items: center; }
-.hero-video, .about-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; pointer-events: none; }
+.video-container { display: flex; align-items: center; min-height: 100vh; overflow: hidden; }
+#group { min-height: 100vh; overflow: hidden; }
+#history { min-height: 100vh; overflow: hidden; }
+.hero-video, .about-video { position: absolute; inset: 0; width: 100%; height: 100%; min-height: 100%; object-fit: cover; z-index: 0; pointer-events: none; }
 .page-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.35); z-index: 1; pointer-events: none; }
 .video-container::before { content: ""; position: absolute; top: 0; left: -150px; bottom: -150px; width: 700%; height: 700px; background: rgba(0, 20, 80, 0.3); transform: rotate(-25deg); z-index: 1; pointer-events: none; }
-.hero-content { position: relative; z-index: 10; display: flex; flex-direction: column; gap: 40px; padding-left: 60px; padding-top: 160px; max-width: 800px; color: white; }
-.hero-content h1 { font-size: 48px; line-height: 1.1; margin-bottom: 20px; }
-.hero-content p { font-size: 22px; line-height: 1.7; margin-bottom: 8px; }
+.hero-content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 3vh, 40px);
+    padding-left: clamp(30px, 5vw, 60px);
+    padding-top: clamp(120px, 16vh, 170px);
+    padding-bottom: 80px;
+    max-width: 800px;
+    max-height: none;
+    overflow: visible;
+    -webkit-overflow-scrolling: auto;
+    color: white;
+}
+.hero-content h1 { font-size: clamp(36px, 4vw, 48px); line-height: 1.1; margin-bottom: 20px; }
+.hero-content p { font-size: clamp(17px, 1.6vw, 22px); line-height: 1.7; margin-bottom: 8px; }
 .option { display: flex; gap: 20px; }
 .option button { padding: 12px 30px; font-size: 18px; font-weight: bold; border: 2px solid white; border-radius: 30px; background: #4169E1; color: white; cursor: pointer; transition: 0.3s; }
 .option button:hover { background: white; color: black; }
@@ -77,7 +114,7 @@ body { font-family: Arial, sans-serif; overflow-x: hidden; }
 .stat-item { width: 140px; text-align: center; }
 .stat-item img { width: 80px; height: 80px; margin: 0 auto 15px; display: block; }
 .stat-item h2 { font-size: 40px; font-weight: 800; color: white; margin-bottom: 5px; }
-.stat-item p { font-size: 20px; font-weight: 700; color: #000; line-height: 1.4; }
+.stat-item p { font-size: 20px; font-weight: 700; color: #ffffff; line-height: 1.4; }
 .divider { width: 1px; height: 80px; background: rgba(255, 255, 255, 0.4); }
 
 /* SLIDE BUTTONS - show only desktop */
@@ -88,10 +125,22 @@ body { font-family: Arial, sans-serif; overflow-x: hidden; }
 .prev-btn { left: 35px; }
 
 /* GROUP COMPANIES PAGE 1.2 */
-.about-content { position: relative; z-index: 2; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 120px 90px 100px; color: white; }
-.about-content h2 { text-align: center; font-size: 60px; margin-bottom: 60px; }
-.company-wrapper { display: flex; justify-content: center; align-items: stretch; gap: 60px; flex-wrap: wrap; }
-.company-card { width: 350px; min-height: 550px; display: flex; flex-direction: column; background: rgba(0,0,0,0.45); backdrop-filter: blur(8px); border-radius: 20px; padding: 30px; transition: 0.3s; }
+.about-content {
+    position: relative;
+    z-index: 2;
+    height: 100vh;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(110px, 14vh, 140px) 90px 100px;
+    color: white;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.about-content h2 { text-align: center; font-size: clamp(42px, 5vw, 60px); margin-bottom: clamp(35px, 6vh, 60px); }
+.company-wrapper { display: flex; justify-content: center; align-items: stretch; gap: clamp(30px, 4vw, 60px); flex-wrap: wrap; }
+.company-card { width: 350px; min-height: 500px; display: flex; flex-direction: column; background: rgba(0,0,0,0.45); backdrop-filter: blur(8px); border-radius: 20px; padding: 30px; transition: 0.3s; }
 .company-card:hover { transform: translateY(-10px); }
 .company-logo { width: 90px; height: 90px; object-fit: contain; margin: 0 auto 20px; display: block; }
 .company-card h3 { text-align: center; margin-bottom: 20px; font-size: 22px; }
@@ -100,17 +149,45 @@ body { font-family: Arial, sans-serif; overflow-x: hidden; }
 .company-card li::before { content: "• "; color: #4da3ff; font-weight: bold; }
 
 /* HISTORY PAGE 1.3 */
-.products-page { position: relative; overflow: hidden; min-height: 100vh; background: radial-gradient(circle at 75% 20%, rgba(255,255,255,0.15), transparent 35%), linear-gradient(135deg, #00144d 0%, #002c80 45%, #0b58d8 100%); }
-.history-section { position: relative; z-index: 2; min-height: 100vh; padding: 120px 80px 100px; color: white; }
-.history-section h2 { text-align: center; font-size: 64px; margin-bottom: 80px; }
-.timeline { position: relative; display: flex; justify-content: space-between; align-items: center; padding: 50px 0; margin-top: -120px; }
+.products-page { position: relative; overflow-y: auto; overflow-x: hidden; min-height: 100vh; background: radial-gradient(circle at 75% 20%, rgba(255,255,255,0.15), transparent 35%), linear-gradient(135deg, #00144d 0%, #002c80 45%, #0b58d8 100%); }
+.history-section {
+    position: relative;
+    z-index: 2;
+    height: 100vh;
+    min-height: 100vh;
+    padding: clamp(110px, 14vh, 140px) 80px 130px;
+    color: white;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.history-section h2 { text-align: center; font-size: clamp(42px, 5vw, 64px); margin-bottom: clamp(45px, 6vh, 80px); }
+.timeline {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 240px 0 240px;
+    margin-top: 0;
+}
 .timeline::before { content: ""; position: absolute; left: 0; top: 50%; width: 100%; height: 4px; background: rgba(255, 255, 255, 0.3); transform: translateY(-50%); }
 .timeline-item { position: relative; width: 18%; z-index: 2; }
 .timeline-item::before { content: ""; width: 22px; height: 22px; background: #ffd700; border-radius: 50%; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
-.timeline-card { background: rgba(255,255,255,.08); backdrop-filter: blur(10px); border-radius: 20px; padding: 40px 25px; text-align: center; width: 220px; margin: 0 auto; opacity: 0; transform: translateX(80px); transition: 1s; }
+.timeline-card {
+    position: relative;
+    background: rgba(255,255,255,.10);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 32px 22px;
+    text-align: center;
+    width: clamp(180px, 15vw, 220px);
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateX(80px);
+    transition: 1s;
+}
 .timeline-card.show { opacity: 1; transform: translateX(0); }
-.timeline-item:nth-child(even) .timeline-card { margin-top: 380px; }
-.timeline-item:nth-child(odd) .timeline-card { margin-bottom: 380px; }
+.timeline-item:nth-child(odd) .timeline-card { top: -170px; }
+.timeline-item:nth-child(even) .timeline-card { top: 170px; }
 .timeline-card img { width: 90px; height: 90px; object-fit: contain; margin-bottom: 20px; }
 .timeline-card h3 { color: #ffd700; font-size: 36px; margin-bottom: 10px; }
 
@@ -148,13 +225,264 @@ body { font-family: Arial, sans-serif; overflow-x: hidden; }
 .product-box:hover { transform: translateY(-10px); background: #ffffff; color: #00144d; border-color: #ffffff; box-shadow: 0 28px 60px rgba(0,0,0,0.38); }
 .product-box h3 { font-size: 34px; letter-spacing: 0.5px; }
 
+/* PAGE 3-6 SCROLL DOWN */
+.info-page {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    padding: 120px 80px 100px;
+    color: white;
+    background:
+        radial-gradient(circle at 80% 18%, rgba(77,163,255,0.24), transparent 36%),
+        radial-gradient(circle at 12% 82%, rgba(255,255,255,0.08), transparent 30%),
+        linear-gradient(135deg, #00144d 0%, #002c80 48%, #0b58d8 100%);
+}
+
+.info-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(120deg, rgba(255,255,255,0.08), transparent 35%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 90px);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.info-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.info-content h2 {
+    text-align: center;
+    font-size: clamp(42px, 5vw, 64px);
+    margin-bottom: 55px;
+    letter-spacing: 2px;
+}
+
+.info-subtitle {
+    max-width: 850px;
+    margin: -30px auto 55px;
+    text-align: center;
+    font-size: clamp(17px, 1.5vw, 22px);
+    line-height: 1.7;
+    color: rgba(255,255,255,0.88);
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 35px;
+}
+
+.info-card {
+    min-height: 270px;
+    padding: 35px;
+    border-radius: 24px;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.22);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+    transition: 0.35s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255,255,255,0.18);
+}
+
+.info-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+    background: rgba(255,255,255,0.16);
+    font-size: 30px;
+}
+
+.info-card h3 {
+    font-size: 26px;
+    margin-bottom: 18px;
+    color: #ffffff;
+}
+
+.info-card p,
+.info-card li {
+    font-size: 18px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.9);
+}
+
+.info-card ul {
+    list-style: none;
+}
+
+.info-card li {
+    margin-bottom: 12px;
+}
+
+.info-card li::before {
+    content: "• ";
+    color: #4da3ff;
+    font-weight: bold;
+}
+
+/* QUALITY */
+.quality-row {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 45px;
+    align-items: stretch;
+}
+
+.quality-big {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.quality-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+/* REASONS */
+.reason-number {
+    font-size: 58px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.20);
+    margin-bottom: 12px;
+}
+
+/* CONTACT - COMPACT FOOTER STYLE */
+#contact {
+    min-height: 52vh;
+    padding: 75px 80px 32px;
+    background:
+        linear-gradient(180deg, #00144d 0%, #000814 100%);
+}
+
+#contact::before {
+    background:
+        linear-gradient(120deg, rgba(255,255,255,0.06), transparent 35%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.018) 0px, rgba(255,255,255,0.018) 1px, transparent 1px, transparent 95px);
+}
+
+#contact .info-content {
+    max-width: 1000px;
+}
+
+#contact h2 {
+    font-size: clamp(34px, 4vw, 46px);
+    margin-bottom: 18px;
+}
+
+#contact .info-subtitle {
+    max-width: 680px;
+    margin: 0 auto 28px;
+    font-size: clamp(14px, 1.2vw, 17px);
+    line-height: 1.5;
+}
+
+.contact-box {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 24px;
+}
+
+.contact-info,
+.contact-form {
+    padding: 24px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 16px 34px rgba(0,0,0,0.22);
+}
+
+.contact-info h3 {
+    font-size: 20px;
+    margin-bottom: 14px;
+}
+
+.contact-info p {
+    font-size: 14px;
+    line-height: 1.55;
+    margin-bottom: 8px;
+    color: rgba(255,255,255,0.88);
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 10px 13px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+}
+
+.contact-form textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.contact-form button {
+    align-self: flex-start;
+    padding: 10px 22px;
+    border: 2px solid white;
+    border-radius: 28px;
+    background: #4169E1;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.contact-form button:hover {
+    background: white;
+    color: #00144d;
+}
+
+.footer-copy {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,0.14);
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+}
+
 /* RESPONSIVE */
 @media (max-width: 1200px) {
     .hero-content { max-width: 65%; }
     .hero-content h1 { font-size: 42px; }
     .hero-content p { font-size: 18px; }
     .company-wrapper { gap: 35px; }
-    .company-card { width: 300px; min-height: 500px; }
+    .company-card { width: 300px; min-height: 460px; }
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+    .quality-row { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 768px) {
@@ -193,7 +521,7 @@ body { font-family: Arial, sans-serif; overflow-x: hidden; }
     /* hide slide buttons on mobile */
     .page-btn { display: none !important; }
 
-    /* PAGE 1.1 mobile: full-screen video, no inner scroll */
+    /* PAGE 1.1 mobile: full-screen video, no outside scroll */
     .video-container { align-items: flex-start; }
     .hero-video,
     .about-video {
@@ -322,6 +650,7 @@ body { font-family: Arial, sans-serif; overflow-x: hidden; }
         max-width: 320px;
         padding: 30px 20px;
         transform: translateX(40px);
+        top: auto !important;
     }
     .timeline-card.show { transform: translateX(0); }
     .timeline-card img { width: 70px; height: 70px; }
@@ -343,7 +672,135 @@ body { font-family: Arial, sans-serif; overflow-x: hidden; }
         border-radius: 18px;
     }
     .product-box h3 { font-size: 20px; }
+
+    /* Page 3-6 mobile */
+    .info-page {
+        padding: 110px 25px 80px;
+    }
+    .info-content h2 {
+        font-size: 34px;
+        margin-bottom: 38px;
+    }
+    .info-subtitle {
+        margin: -18px auto 35px;
+        font-size: 16px;
+    }
+    .card-grid,
+    .quality-list,
+    .contact-box {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    .info-card {
+        min-height: auto;
+        padding: 28px;
+    }
+    .info-icon {
+        width: 52px;
+        height: 52px;
+        font-size: 26px;
+    }
+    .info-card h3 {
+        font-size: 23px;
+    }
+    .info-card p,
+    .info-card li {
+        font-size: 16px;
+    }
+
+    #contact {
+        min-height: auto;
+        padding: 80px 24px 28px;
+    }
+
+    #contact h2 {
+        font-size: 30px;
+        margin-bottom: 12px;
+    }
+
+    #contact .info-subtitle {
+        margin: 0 auto 22px;
+        font-size: 14px;
+    }
+
+    .contact-info,
+    .contact-form {
+        padding: 20px;
+        border-radius: 16px;
+    }
+
+    .contact-info h3 {
+        font-size: 18px;
+    }
+
+    .contact-info p {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .footer-copy {
+        font-size: 12px;
+        margin-top: 18px;
+    }
 }
+
+/* FIX: PAGE 1.1 / 1.2 / 1.3 STABLE VIEWPORT */
+#home,
+#group,
+#history {
+    height: 100vh;
+    min-height: 100vh;
+}
+
+#home .page-overlay,
+#group .page-overlay {
+    height: 100%;
+}
+
+#group .about-video {
+    display: block;
+}
+
+/* keep timeline line behind dots only, not through cards */
+.timeline::before {
+    z-index: 1;
+}
+.timeline-item::before {
+    z-index: 4;
+}
+.timeline-card {
+    z-index: 3;
+}
+
+
+/* FINAL FIX: REMOVE MIDDLE SCROLLBAR LINE */
+#home,
+#group,
+#history,
+.hero-content,
+.about-content,
+.history-section {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+#home::-webkit-scrollbar,
+#group::-webkit-scrollbar,
+#history::-webkit-scrollbar,
+.hero-content::-webkit-scrollbar,
+.about-content::-webkit-scrollbar,
+.history-section::-webkit-scrollbar {
+    display: none;
+}
+
+#home {
+    overflow: hidden !important;
+}
+
+#home .hero-content {
+    overflow: visible !important;
+}
+
 </style>
 </head>
 <body>
@@ -355,10 +812,10 @@ body { font-family: Arial, sans-serif; overflow-x: hidden; }
             <li><a href="#page0">HOME</a></li>
             <li><a href="#homeSlider" onclick="goToSlide(0)">ABOUT</a></li>
             <li><a href="#page2down">PRODUCT</a></li>
-            <li><a href="#">CAPABILITIES</a></li>
-            <li><a href="#">QUALITY</a></li>
-            <li><a href="#">RESOURCES</a></li>
-            <li><a href="#">CONTACT US</a></li>
+            <li><a href="#capabilities">CAPABILITIES</a></li>
+            <li><a href="#quality">QUALITY</a></li>
+            <li><a href="#reasons">REASONS</a></li>
+            <li><a href="#contact">CONTACT US</a></li>
         </ul>
     </div>
     <div class="nav-right">
@@ -434,6 +891,140 @@ body { font-family: Arial, sans-serif; overflow-x: hidden; }
             <a href="product-detail.html?product=nut19" class="product-box"><h3>nut19</h3></a>
             <a href="product-detail.html?product=nut20" class="product-box"><h3>nut20</h3></a>
         </div></div>
+    </div>
+</section>
+
+<section class="info-page" id="capabilities">
+    <div class="info-content">
+        <h2>CAPABILITIES</h2>
+        <p class="info-subtitle">Manufacturing capabilities designed for stable quality, consistent production, and custom fastener requirements.</p>
+
+        <div class="card-grid">
+            <div class="info-card">
+                <div class="info-icon">⚙</div>
+                <h3>Cold Forging</h3>
+                <p>High-volume fastener production with strong material structure, stable dimensions, and efficient manufacturing process.</p>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">⌀</div>
+                <h3>Threading Process</h3>
+                <p>Precision thread forming for nuts, bolts, and special fastener applications with consistent quality control.</p>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">⌘</div>
+                <h3>OEM Fasteners</h3>
+                <p>Customized fastener solutions based on customer drawings, specifications, materials, and industrial applications.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="info-page" id="quality">
+    <div class="info-content">
+        <h2>QUALITY</h2>
+        <p class="info-subtitle">Quality control is managed throughout the production process to ensure reliable fasteners for industrial use.</p>
+
+        <div class="quality-row">
+            <div class="info-card quality-big">
+                <div class="info-icon">✓</div>
+                <h3>Quality Assurance</h3>
+                <p>From raw material checking to final inspection, every production step is controlled to support stable product quality and customer confidence.</p>
+            </div>
+
+            <div class="quality-list">
+                <div class="info-card">
+                    <h3>Inspection</h3>
+                    <ul>
+                        <li>Dimensional inspection</li>
+                        <li>Thread inspection</li>
+                        <li>Surface checking</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>Standards</h3>
+                    <ul>
+                        <li>ISO quality control</li>
+                        <li>IATF automotive mindset</li>
+                        <li>Customer specification control</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>Testing</h3>
+                    <ul>
+                        <li>Hardness checking</li>
+                        <li>Material verification</li>
+                        <li>Final product checking</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>Traceability</h3>
+                    <ul>
+                        <li>Production records</li>
+                        <li>Lot control</li>
+                        <li>Inspection documentation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="info-page" id="reasons">
+    <div class="info-content">
+        <h2>REASONS TO CHOOSE US</h2>
+        <p class="info-subtitle">A reliable manufacturing partner for customers who need stable supply, technical support, and long-term cooperation.</p>
+
+        <div class="card-grid">
+            <div class="info-card">
+                <div class="reason-number">01</div>
+                <h3>30+ Years Experience</h3>
+                <p>Long experience in fastener manufacturing and global supply for industrial customers worldwide.</p>
+            </div>
+
+            <div class="info-card">
+                <div class="reason-number">02</div>
+                <h3>Global Supply</h3>
+                <p>Export experience with customers in many countries and support for international industrial requirements.</p>
+            </div>
+
+            <div class="info-card">
+                <div class="reason-number">03</div>
+                <h3>Reliable Production</h3>
+                <p>Strong manufacturing capability with multiple plants, experienced teams, and monthly production capacity.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="info-page" id="contact">
+    <div class="info-content">
+        <h2>CONTACT US</h2>
+        <p class="info-subtitle">Contact our team for quotation requests, OEM fasteners, and business cooperation.</p>
+
+        <div class="contact-box">
+            <div class="contact-info">
+                <h3>THAILOCK FASTENERS CO., LTD.</h3>
+                <p><strong>Location:</strong> Chonburi & Rayong, Thailand</p>
+                <p><strong>Email:</strong> sales@thailock.com</p>
+                <p><strong>Tel:</strong> +66-XXX-XXX-XXXX</p>
+                <p><strong>Products:</strong> Nuts, Screws, Bolts and OEM Fastener Solutions</p>
+            </div>
+
+            <form class="contact-form">
+                <input type="text" placeholder="Your Name">
+                <input type="email" placeholder="Your Email">
+                <input type="text" placeholder="Subject">
+                <textarea placeholder="Message"></textarea>
+                <button type="button">Send Message</button>
+            </form>
+        </div>
+
+        <div class="footer-copy">© 2026 THAILOCK FASTENERS CO., LTD. All Rights Reserved.</div>
     </div>
 </section>
 
