@@ -4,1129 +4,225 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THAI LOCK</title>
-
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: Arial, sans-serif; overflow-x: hidden; }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 15px 40px; background: rgba(241, 230, 230, 0.1);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            transition: top 0.4s ease; z-index: 1000;
+        }
+        .nav-logo img { width: 80px; height: auto; display: block; }
+        .nav-menu { display: flex; gap: 30px; list-style: none; flex: 1; justify-content: center; }
+        .nav-menu a { text-decoration: none; color: white; font-size: clamp(14px, 1vw, 20px); font-weight: bold; transition: 0.3s; white-space: nowrap; }
+        .nav-menu a:hover { color: #2f32f4; }
+        .nav-right { display: flex; align-items: center; gap: 20px; flex: 1; justify-content: flex-end; }
+        .language-switch { display: flex; gap: 8px; align-items: center; }
+        .language-switch a { color: white; text-decoration: none; font-size: 20px; font-weight: bold; }
+        .language-switch span { color: blue; }
+        .menu-toggle { background: transparent; border: none; color: black; font-size: 50px; cursor: pointer; display: none; }
+
+        /* HERO SECTION */
+        .video-container { position: relative; width: 100%; min-height: 100vh; overflow: hidden; display: flex; align-items: center; }
+        .hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+        .page-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.35); z-index: 1; }
+        .video-container::before {
+            content: ""; position: absolute; top: 0; left: -150px; bottom: -150px;
+            width: 700%; height: 700px; background: rgba(0, 20, 80, 0.3);
+            transform: rotate(-25deg); z-index: 1;
+        }
+        .hero-content { position: relative; z-index: 10; display: flex; flex-direction: column; gap: 40px; padding-left: 60px; max-width: 800px; color: white; }
+        .hero-content h1 { font-size: 48px; line-height: 1.1; margin-bottom: 20px; }
+        .hero-content p { font-size: 22px; line-height: 1.7; margin-bottom: 8px; }
+        .option { display: flex; gap: 20px; z-index: 10; }
+        .option button { padding: 12px 30px; font-size: 18px; font-weight: bold; border: 2px solid white; border-radius: 30px; background: #4169E1; color: white; cursor: pointer; transition: 0.3s; }
+        .option button:hover { background: white; color: black; }
+        .stats { display: flex; align-items: center; gap: 20px; z-index: 10; }
+        .stat-item { width: 140px; text-align: center; }
+        .stat-item img { width: 80px; height: 80px; margin: 0 auto 15px; display: block; }
+        .stat-item h2 { font-size: 40px; font-weight: 800; color: white; margin-bottom: 5px; }
+        .stat-item p { font-size: 20px; font-weight: 700; color: #000; line-height: 1.4; }
+        .divider { width: 1px; height: 80px; background: rgba(255, 255, 255, 0.4); }
 
         /* PAGE SLIDER */
-
-        .page-slider{
-            width:100%;
-            overflow:hidden;
+        .page-slider { width: 100%; overflow: hidden; }
+        .pages { display: flex; width: 200vw; transition: 0.8s ease; }
+        .page { width: 100vw; min-height: 100vh; position: relative; flex-shrink: 0; overflow: hidden; }
+        .page-btn {
+            position: fixed; top: 50%; transform: translateY(-50%);
+            width: 70px; height: 70px; border: none; border-radius: 50%;
+            background: rgba(255,255,255,.2); color: white; font-size: 35px;
+            cursor: pointer; display: flex; justify-content: center; align-items: center; z-index: 9999;
         }
+        .next-btn { right: 30px; }
+        .prev-btn { left: 30px; }
 
-        .pages{
-            display:flex;
-            width:200vw;
-
-            transition:0.8s ease;
+        /* GROUP COMPANIES */
+        .about-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .about-content { position: relative; z-index: 2; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 100px 80px 80px; color: white; }
+        .about-content h2 { text-align: center; font-size: 60px; margin: 50px 0 60px; }
+        .company-wrapper { display: flex; justify-content: center; align-items: stretch; gap: 60px; flex-wrap: wrap; }
+        .company-card {
+            width: 350px; flex: 0 0 350px; min-height: 550px; display: flex; flex-direction: column;
+            background: rgba(0,0,0,0.45); backdrop-filter: blur(8px); border-radius: 20px; padding: 30px; transition: 0.3s;
         }
+        .company-card:hover { transform: translateY(-10px); }
+        .company-logo { width: 90px; height: 90px; object-fit: contain; margin: 0 auto 20px; display: block; }
+        .company-card h3 { text-align: center; margin-bottom: 20px; font-size: 22px; }
+        .company-card ul { list-style: none; padding: 0; }
+        .company-card li { margin-bottom: 12px; line-height: 1.6; }
+        .company-card li::before { content: "• "; color: #4da3ff; font-weight: bold; }
 
-        .page{
-            width:100vw;
-            min-height:100vh;
-
-            position:relative;
-            flex-shrink:0;
-
+                /* HISTORY SECTION */
+        .products-page {
+            position: relative;
             overflow: hidden;
+            background: linear-gradient(circle at center, #0b58d8 0%, #002c80 45%, #00144d 100%);
         }
-
-        .page-overlay{
-            position:absolute;
-            inset:0;
-
-            background:rgba(0,0,0,.35);
+        .products-page::before {
+            content: "";
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.05);
+            right: -150px;
+            top: -100px;
+        }
+        .products-page::after {
+            content: "";
+            position: absolute;
+            width: 900px;
+            height: 900px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.03);
+            right: -250px;
+            top: -250px;
+        }
+        .history-section {
+            position: relative;
             z-index: 1;
-        }
-
-        .company-wrapper{
-            display:flex;
-            justify-content:center;
-            align-items: stretch;
-            gap:60px;
-            flex-wrap:wrap;
-        }
-
-        .products-page{
-            position: relative;
-            overflow: hidden;
-
-            background:
-            linear-gradient(circle at center,
-            #0b58d8 0%,
-            #002c80 45%,
-            #00144d 100%);
-        }
-
-        .products-page::before{
-            content:"";
-
-            position:absolute;
-
-            width:700px;
-            height:700px;
-
-            border-radius:50%;
-
-            background:rgba(255,255,255,.05);
-
-            right:-150px;
-            top:-100px;
-        }
-
-        .products-page::after{
-            content:"";
-
-            position:absolute;
-
-            width:900px;
-            height:900px;
-
-            border-radius:50%;
-
-            background:rgba(255,255,255,.03);
-
-            right:-250px;
-            top:-250px;
-        }
-
-        .products-content{
-            height:100%;
-
-            display:flex;
-            flex-direction:column;
-            justify-content:center;
-
-            padding:80px;
-        }
-
-        .products-content h2{
-            text-align:center;
-            font-size:60px;
-            margin-bottom:60px;
-        }
-
-        .products-page{
-            position: relative;
-            min-height: 100vh;
-        }
-
-        .page-btn{
-            position:fixed;
-            top:50%;
-            transform:translateY(-50%);
-
-            width:70px;
-            height:70px;
-
-            border:none;
-            border-radius:50%;
-
-            background:rgba(255,255,255,.2);
-            color:white;
-            font-size:35px;
-
-            cursor:pointer;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            z-index:9999;
-        }
-
-        .next-btn{
-            right:30px;
-        }
-
-        .prev-btn{
-            left:30px;
-        }
-
-        .prev-btn,
-        .next-btn{
-            z-index: 9999;
-        }
-
-        /* 3 กล่อง */
-        .about-content{
-            position: relative;
-            z-index: 2;
-        
-            min-height: 100vh;
-
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-
-            padding: 100px 80px 80px;
-
+            padding: 100px 80px;
+            background: linear-gradient(135deg, #00144d, #0b58d8);
             color: white;
         }
-
-        .about-content h2{
+        .history-section h2 {
             text-align: center;
-            font-size: 60px;
             margin-top: 50px;
-            margin-bottom: 60px;
+            font-size: 64px;
+            margin-bottom: 80px;
         }
-
-        .company-card{
-            width: 350px;
-            flex: 0 0 350px;
-            min-height: 550px;
+        .timeline {
+            position: relative;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-
-            background: rgba(0,0,0,0.45);
-            backdrop-filter: blur(8px);
+            justify-content: space-between;
+            align-items: center;
+            padding: 50px 0;
+        }
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%);
+        }
+        .timeline-item {
+            position: relative;
+            width: 18%;
+            z-index: 2;
+        }
+        .timeline-item::before {
+            content: "";
+            width: 22px;
+            height: 22px;
+            background: #ffd700;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .timeline-card {
+            background: rgba(255,255,255,.08);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
-            padding: 30px;
-            color: white;
-
+            padding: 40px 25px;
+            text-align: center;
+            transition: 1s;
+            width: 220px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateX(80px);
         }
-
-        .company-card:hover{
-            transform: translateY(-10px);
+        .timeline-card.show {
+            opacity: 1;
+            transform: translate(0);
         }
-
-        .company-logo{
+        .timeline-card:hover {
+            transform: scale(1.05);
+        }
+        .timeline-item:nth-child(even) .timeline-card {
+            margin-top: 380px;
+        }
+        .timeline-item:nth-child(odd) .timeline-card {
+            margin-bottom: 380px;
+        }
+        .timeline-card img {
             width: 90px;
             height: 90px;
             object-fit: contain;
-
-            display: block;
-            margin: 0 auto 20px;
-        }
-
-        .company-card h3{
-            text-align: center;
             margin-bottom: 20px;
-            margin-top: 0;
-            font-size: 22px;
         }
-
-        .factory-img{
-            width: 100%;
-            margin-top: auto;
-            border-radius: 12px;
-        }
-
-        .company-card ul{
-            list-style: none;
-            padding: 0;
-        }
-
-        .company-card li{
-            margin-bottom: 12px;
-            line-height: 1.6;
-        }
-
-        .company-card li::before{
-            content: "• ";
-            color: #4da3ff;
-            font-weight: bold;
-        }
-
-        .factory-img{
-            width: 100%;
-            margin-top: 20px;
-
-            border-radius: 12px;
-        }
-
-        .slider-container{
-            position: relative;
-            width: 100%;
-            margin-top: 60px;
-            overflow: visible;
-        }
-
-        .next{
-            right: 20px;
-        }
-
-        .prev{
-            left: 20px;
-        }
-
-        .group-companies{
-            display: flex;
-            justify-content: center;
-            align-items: stretch;
-            gap: 50px;
-
-            overflow-x: auto;
-
-            padding: 20px 0px;
-        }
-
-        .slide-btn{
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-
-            width: 60px;
-            height: 60px;
-
-            border: none;
-            border-radius: 50%;
-
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
-
-            color: white;
-            font-size: 30px;
-
-            cursor: pointer;
-
-            z-index: 100;
-
-            transition: .3s;
-        }
-
-        .slide-btn:hover{
-            background: #0b58d8;
-        }
-
-        .prev{
-            left: 0;
-        }
-
-        .next{
-            right: 0;
-        }
-
-        .group-companies::-webkit-scrollbar{
-            display:none;
-        }
-
-        .navbar {
-            position: fixed;
-            top: 0px;
-            left: 0px;
-            right: 0px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 15px 10px;
-
-            background-color: rgba(241, 230, 230, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-
-            transition: top 0.4s ease;
-
-            z-index: 100;
-        }
-
-        .nav-left,
-        .nav-center,
-        .nav-right {
-            flex: 1;
-        }
-
-        .nav-center {
-            display: flex;
-            justify-content: center;
-        }
-
-        .nav-right {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-            margin: 0;
-        }
-
-        .language-switch {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-
-            margin-left: auto;
-            margin-right: 20px;
-        }
-
-        .language-switch a {
-            color: rgb(251, 248, 248);
-            text-decoration: none;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .language-switch a:hover {
-            color: #2f38ab;
-        }
-
-        .language-switch span {
-            color: blue;
-        }
-
-        .menu-toggle {
-            background: transparent;
-            border: none;
-            color: rgb(0, 0, 0);
-            font-size: 50px;
-            cursor: pointer;
-            transition: 0.3s;
-            display: none;
-
-            margin-left: 20px;
-            flex-shrink: 0;
-        }
-
-        .menu-toggle:hover {
-            color: #2a2ad5;
-        }
-
-        .nav-logo {
-            flex-shrink: 0;
-            margin-left: 40px;
-        }
-
-        .nav-logo a {
-            display: inline-block;
-            text-decoration: none;
-        }
-
-        .nav-logo img {
-            width: 80px;
-            height: auto;
-            display: block;
-        }
-
-        .nav-menu {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            list-style: none;
-
-            flex: 1;
-            margin-left: 0;
-        }
-
-        .nav-menu li a {
-            white-space: nowrap;
-            text-decoration: none;
-            color: white;
-            font-size: clamp(14px, 1vw, 20px);
-            font-weight: bold;
-            font-family: Arial, sans-serif;
-            transition: 0.3s;
-
-            transition: 0.1s;
-        }
-
-        .nav-menu li a:hover {
-            color: #2f32f4;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-    .hero-video{
-        position:absolute;
-        top:0;
-        left:0;
-
-        width:100%;
-        height:100%;
-
-        object-fit:cover;
-
-        z-index:0;
-    }
-
-
-    .video-container {
-        position: relative;
-        width: 100%;
-        min-height: 100vh;
-        overflow: hidden;
-    }
-
-.video-container::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -150px;
-    bottom: -150px;
-
-    width: 700%;
-    height: 700px;
-
-    background: rgba(0, 20, 80, 0.3);
-
-    transform: rotate(-25deg);
-    
-    z-index: 1;
-}
-
-.hero-content{
-    position: relative;
-    z-index: 10;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 40px;
-
-    padding-top: 180px;
-    padding-left: 60px;
-
-    max-width: 800px;
-}
-
-
-/* กล่องข้อความ */
-.content {
-    z-index: 10;
-    color: white;
-}
-
-.content p{
-    line-height: 1.7;
-}
-
-        .logo {
-            width: 80px;
-            height: auto;
-            margin-bottom: 0px;
-            display: block;
-        }
-
-        h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            line-height: 1.1;
-        }
-
-        p {
-            font-size: 22px;
-            margin-bottom: 8px;
-        }
-
-    .option {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-
-    z-index: 10;
-}
-
-.option button {
-    padding: 12px 30px;
-    font-size: 18px;
-    font-weight: bold;
-
-    border: 2px solid white;
-    border-radius: 30px;
-
-    background-color: #4169E1;
-    color: white;
-
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.option button:hover {
-    background: white;
-    color: black;
-}
-
-.option span {
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.stats {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-
-    z-index: 10;
-}
-
-.stat-item {
-    width: 140px;
-    text-align: center;
-}
-
-.stat-item img {
-    display: block;
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 15px;
-}
-
-.stat-item h2 {
-    font-size: 40px;
-    font-weight: 800;
-    margin-bottom: 5px;
-    color: #ffffff;
-}
-
-.stat-item p {
-    font-size: 20px;
-    font-weight: 700;
-    color: #000;
-    line-height: 1.4;
-}
-
-.divider {
-    width: 1px;
-    height: 80px;
-    background-color: rgba(255, 255, 255, 0.4);
-}
-
-.about-section {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
-}
-
-.about-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-}
-
-.about-content h2 {
-    font-size: 60px;
-}
-
-html{scroll-behavior: smooth;
-}
-
-.container{
-    max-width: 1400px;
-    margin: auto;
-    padding: 0 60px;
-}
-
-.hero-image {
-    position: absolute;
-    right: 20px;
-    top: 180px;
-    width: 45%;
-    display: flex;
-    justify-content: center;
-    z-index: 10;
-}
-
-.hero-image img {
-    width: 100%;
-    max-width: 700px;
-    height: auto;
-
-    transform: rotate(-8deg); 
-}
-
-.history-grid{
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(auto-fit,minmax(220px,1fr));
-
-    gap:40px;
-
-}
-
-.history-card{
-
-    background:rgba(255,255,255,.08);
-
-    backdrop-filter:blur(10px);
-
-    border-radius:20px;
-
-    padding:30px;
-
-    text-align:center;
-
-    transition:.3s;
-
-}
-
-.history-card:hover{
-
-    transform:translateY(-10px);
-
-}
-
-.history-card img{
-
-    width:100px;
-
-    height:100px;
-
-    object-fit:contain;
-
-    margin:20px auto;
-
-}
-
-.history-section{
-    position: relative;
-    z-index: 1;
-
-    padding: 100px 80px;
-    height: 100px 80px;
-
-    background:
-    linear-gradient(
-        135deg,
-        #00144d,
-        #0b58d8
-    );
-
-    color:white;
-
-}
-
-.history-section h2{
-
-    text-align:center;
-    margin-top: 50px;
-    font-size:64px;
-
-    margin-bottom:80px;
-
-}
-
-.timeline{
-
-    position:relative;
-    display:flex;
-    justify-content:space-between;
-    align-items: center;
-
-    padding: 50PX 0;
-
-}
-
-.timeline-line{
-
-    position:absolute;
-
-    top:50%;
-    left:0;
-
-    width:100%;
-    height:4px;
-
-    background: rgba(255, 255, 255, 0.4);
-
-    transform:translateY(-50%);
-
-}
-
-.timeline-item{
-
-    position:relative;
-
-    width:18%;
-
-    z-index:2;
-
-}
-
-.timeline-item::before{
-
-    content:"";
-
-    width:22px;
-
-    height:22px;
-
-    background:#ffd700;
-
-    border-radius:50%;
-
-    position:absolute;
-
-    left:50%;
-
-    top:50%;
-
-    transform:translate(-50%,-50%);
-
-}
-
-.timeline::before{
-
-    content:"";
-
-    position:absolute;
-
-    left:0;
-
-    top:50%;
-
-    width:100%;
-
-    height:4px;
-
-    background:rgba(255,255,255,.3);
-
-}
-
-.timeline-card{
-
-    background:rgba(255,255,255,.08);
-    backdrop-filter:blur(10px);
-    border-radius:20px;
-    padding:40px 25px;
-    text-align:center;
-    transition:.4s;
-    width: 220px;
-    margin: 0 auto;
-}
-
-.timeline-card{
-
-    opacity: 0;
-    transform: translateX(80px);
-    transition: 1s;
-}
-
-.timeline-card.show{
-    opacity: 1;
-    transform: translate(0);
-}
-
-.timeline-card:hover{
-
-    transform: scale(1.05);
-
-}
-
-.timeline-item:nth-child(even)
-.timeline-card{
-
-    margin-top:380px;
-
-}
-
-.timeline-item:nth-child(odd)
-.timeline-card{
-
-    margin-bottom:380px;
-
-}
-
-.timeline-card img{
-
-    width:90px;
-
-    height:90px;
-
-    object-fit:contain;
-
-    margin-bottom:20px;
-
-}
-
-.timeline-card h3{
-
-    color:#ffd700;
-
-    font-size:36px;
-
-    margin-bottom:10px;
-
-}
-
-@media (max-width:1200px){
-
-    .hero-content{
-        width:55%;
-    }
-
-    .hero-image{
-        width:45%;
-        top:220px;
-    }
-
-    .hero-image img{
-        max-width:550px;
-    }
-
-    .content h1{
-        font-size:42px;
-    }
-
-    .content p{
-        font-size:18px;
-    }
-
-}
-
-    @media (max-width:768px){
-
-        /* Navbar */
-        .nav-menu{
-            display:none;
-        }
-
-        .menu-toggle{
-            display:block;
-            font-size:40px;
-            margin-left:10px;
-        }
-
-        .navbar{
-            padding:10px 15px;
-        }
-
-        .nav-logo{
-            margin-left:0;
-        }
-
-        .logo{
-            width:55px;
-        }
-
-        .language-switch a{
-            font-size:16px;
-        }
-
-        .video-container::before{
-
-            width: 200%;
-            height: 300px;
-
-            left: -100px;
-            top: 300px;
-
-            transform: rotate(-35deg);
-        }
-
-        /* หน้าแรก */
-        .video-container{
-
-            min-height:auto;
-            padding:120px 20px 100px;
-
-            display:flex;
-            flex-direction:column;
-            align-items:flex-start;
-        }
-
-        /* ยกเลิก absolute */
-        .content,
-        .hero-image,
-        .option,
-        .stats{
-
-            position:relative;
-            top:auto;
-            left:auto;
-            right:auto;
-
-        }
-
-        /* ข้อความ */
-        .content{
-
-            width:100%;
-            margin-bottom:40px;
-
-        }
-
-        .content h1{
-
-            font-size:42px;
-            margin-bottom:10px;
-
-        }
-
-        .content p{
-
-            font-size:18px;
-            line-height:1.7;
-
-        }
-
-        /* รูปสินค้า */
-        .hero-image{
-
-            width:100%;
-            display:flex;
-            justify-content:center;
-            margin-bottom:40px;
-
-        }
-
-        .hero-image img{
-
-            width:90%;
-            max-width:450px;
-            transform:none;
-
-        }
-
-        .hero-content{
-
-            padding-top: 120px;
-            padding-left: 20px;
-            padding-right: 20px;
-
-            gap:30px;
-
-            max-width: 100%;
-        }
-
-        /* ปุ่ม */
-        .option{
-            flex-direction:column;
-            align-items:center;
-            display: flex;
-            width: 100%;
-        }
-
-        .option button{
-
-            width:80%;
-            max-width: 430px;
-
-        }
-
-        /* สถิติ */
-        .stats{
-            display: flex;
-            flex-direction:column;
-            align-items:center;
-            width: 100%;
-        }
-
-        .stat-item{
-            width: 100%;
-            text-align: center;
-        }
-
-        .divider{
-
-            width:80px;
-            height:1px;
-
-        }
-
-        .stat-item{
-
-            width:100%;
-            text-align:center;
-
-        }
-
-        .stat-item img{
-
-            width:60px;
-            height:60px;
-
-        }
-
-        .stat-item h2{
-
-            font-size:36px;
-
-        }
-
-        .timeline{
-
-            flex-direction:column;
-
-            gap:40px;
-
-        }
-
-        .timeline-line{
-
-            width:4px;
-
-            height:100%;
-
-            left:30px;
-
-            top:0;
-
-            transform:none;
-
-        }
-
-        .timeline-item{
-
-            width:100%;
-
-            padding-left:80px;
-
-        }
-
-        .timeline-item::before{
-
-            left:30px;
-
-            top:30px;
-
-        }
-
-        .timeline-item:nth-child(even)
-        .timeline-card,
-
-        .timeline-item:nth-child(odd)
-        .timeline-card{
-
-            margin:0;
-
-        }
-    }
-
-</style>
-    
+        .timeline-card h3 {
+            color: #ffd700;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .hero-content { max-width: 55%; }
+            .hero-content h1 { font-size: 42px; }
+            .hero-content p { font-size: 18px; }
+        }
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .menu-toggle { display: block; font-size: 40px; margin-left: 10px; }
+            .navbar { padding: 10px 15px; }
+            .nav-logo { margin-left: 0; }
+            .nav-logo img { width: 55px; }
+            .language-switch a { font-size: 16px; }
+            .video-container { padding: 120px 20px 100px; flex-direction: column; align-items: flex-start; min-height: auto; }
+            .video-container::before { width: 200%; height: 300px; left: -100px; top: 300px; transform: rotate(-35deg); }
+            .hero-content { padding: 120px 20px 0; max-width: 100%; width: 100%; gap: 30px; }
+            .option { flex-direction: column; align-items: center; width: 100%; }
+            .option button { width: 80%; max-width: 430px; }
+            .stats { flex-direction: column; width: 100%; }
+            .stat-item { width: 100%; }
+            .divider { width: 80px; height: 1px; }
+            .timeline { flex-direction: column; gap: 40px; }
+            .timeline::before { width: 4px; height: 100%; left: 30px; top: 0; transform: none; }
+            .timeline-item { width: 100%; padding-left: 80px; }
+            .timeline-item::before { left: 30px; top: 30px; }
+            .timeline-item:nth-child(even) .timeline-card, .timeline-item:nth-child(odd) .timeline-card { margin: 0; }
+        }
+    </style>
 </head>
-
-
 <body>
-
-<div class="video-container" id="home">
-
-    <video autoplay muted loop playsinline class="hero-video">
-        <source src="ล่าสุด (1).mp4" type="video/mp4">
-    </video>
-
-    <div class="page-overlay"></div>
-
-    <!-- แถบด้านบน -->
     <nav class="navbar">
-
         <div class="nav-left">
             <div class="nav-logo">
-                <a href="#home">
-                    <img src="TL 1.png" alt="THAI LOCK Logo" class="logo">
-                </a>
+                <a href="#home"><img src="TL 1.png" alt="Logo"></a>
             </div>
         </div>
-
         <div class="nav-center">
             <ul class="nav-menu">
                 <li><a href="#home">HOME</a></li>
@@ -1138,293 +234,165 @@ html{scroll-behavior: smooth;
                 <li><a href="#">CONTACT US</a></li>
             </ul>
         </div>
-
         <div class="nav-right">
             <div class="language-switch">
-                <a href="#">TH</a>
-                <span>/</span>
-                <a href="#">EN</a>
-                <span>/</span>
-                <a href="#">中文</a>
+                <a href="#">TH</a><span>/</span><a href="#">EN</a><span>/</span><a href="#">中文</a>
             </div>
-
             <button class="menu-toggle">☰</button>
         </div>
-    
     </nav>
 
-    <!-- ข้อความ -->
-    <div class="hero-content">
-        <div class="content">
-            <h1>THAILOCK</h1>
-            <h1>FASTENERS</h1>
-
-            <p>THAILOCK FASTENERS CO., LTD was established</p>
-            <p>in 1991 as a professional lock nuts manufacturer.</p>
-
-            <br>
-
-            <p>With over 30 years of experiences in the industry, Thailock</p>
-            <p>Fasteners is now actively supplying a wide variety of nuts to</p>
-            <p>customers worldwide, including in Europe, North America,</p>
-            <p>and Southeast Asia.</p>
-        </div>
-
-        <!-- ตัวเลือก -->
-        <div class="option">
-            <button onclick="location.href='quote.html'">
-                Get Quote
-            </button>
-
-            <button onclick="location.href='about.html'">
-                Learn More
-            </button>
-        </div>
-
-        <div class="stats">
-
-            <div class="stat-item">
-                <img src="r_2.png" alt="">
-                <h2>30+</h2>
-                <p>Years Experience</p>
+    <div class="video-container" id="home">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="ล่าสุด (1).mp4" type="video/mp4">
+        </video>
+        <div class="page-overlay"></div>
+        <div class="hero-content">
+            <h1>THAILOCK<br>FASTENERS</h1>
+            <p>THAILOCK FASTENERS CO., LTD was established in 1991 as a professional lock nuts manufacturer.</p>
+            <p>With over 30 years of experiences in the industry, Thailock Fasteners is now actively supplying a wide variety of nuts to customers worldwide.</p>
+            <div class="option">
+                <button onclick="location.href='quote.html'">Get Quote</button>
+                <button onclick="location.href='about.html'">Learn More</button>
             </div>
-
-            <div class="divider"></div>
-
-            <div class="stat-item">
-                <img src="002-globe-blue.png" alt="">
-                <h2>50+</h2>
-                <p>Countries Served</p>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="stat-item">
-                <img src="9784009.png" alt="">
-                <h2>1000+</h2>
-                <p>Satisfied Clients</p>
-            </div>
-
-        </div>
-    </div>
-<!--
-    <div class="hero-image">
-        <img src="nuts_transparent.png" alt="THAILOCK Product">
-    </div>
--->
-</div>  
-<!-- หน้าที่2 -->
-<!-- SECTION 2 + SECTION 3 -->
-<section class="page-slider">
-
-    <div class="pages" id="pages">
-
-        <!-- PAGE 2 -->
-        <div class="page">
-
-            <video autoplay muted loop playsinline class="about-video">
-                <source src="out.mp4" type="video/mp4">
-            </video>
-
-            <div class="page-overlay"></div>
-
-            <div class="about-content">
-
-                <h2>GROUP COMPANIES</h2>
-
-                <div class="company-wrapper">
-
-                    <div class="company-card">
-                        <img src="jingfong-logo.png" class="company-logo">
-                        <h3>JING FONG INDUSTRY</h3>
-
-                        <ul>
-                            <li>OEM / Special Nuts</li>
-                            <li>Tainan, Taiwan</li>
-                            <li>Capacity: >1,000 Tons / Month</li>
-                        </ul>
-                    </div>
-
-                    <div class="company-card">
-                        <img src="TL 1.png" class="company-logo">
-                        <h3>THAILOCK FASTENERS</h3>
-
-                        <ul>
-                            <li>Standard / OEM Fasteners</li>
-                            <li>2 Plants at Chonburi & Rayong</li>
-                            <li>Area: 70,000 m²</li>
-                        </ul>
-                    </div>
-
-                    <div class="company-card">
-                        <img src="thaimax-logo.png" class="company-logo">
-                        <h3>THAIMAX PLASTICS</h3>
-
-                        <ul>
-                            <li>Plastic Injection Parts</li>
-                            <li>Compound Material</li>
-                            <li>Rayong, Thailand</li>
-                        </ul>
-                    </div>
-
+            <div class="stats">
+                <div class="stat-item">
+                    <img src="r_2.png" alt="">
+                    <h2>30+</h2>
+                    <p>Years Experience</p>
                 </div>
-
-                <button class="page-btn next-btn">
-                    ❯
-                </button>
-
-            </div>
-
-        </div>
-
-        <!-- PAGE 3 -->
-        <div class="page products-page">
-
-        
-
-<section class="history-section">
-
-    <h2>COMPANY HISTORY</h2>
-
-    <div class="timeline">
-
-        <div class="timeline-item">
-            <div class="timeline-card">
-                <img src="factory1.jpg">
-                <h3>1980</h3>
-                <p>JING FONG INDUSTRY was founded in Taiwan</p>
+                <div class="divider"></div>
+                <div class="stat-item">
+                    <img src="002-globe-blue.png" alt="">
+                    <h2>50+</h2>
+                    <p>Countries Served</p>
+                </div>
+                <div class="divider"></div>
+                <div class="stat-item">
+                    <img src="9784009.png" alt="">
+                    <h2>1000+</h2>
+                    <p>Satisfied Clients</p>
+                </div>
             </div>
         </div>
-
-        <div class="timeline-item">
-            <div class="timeline-card">
-                <img src="TL 1.png">
-                <h3>1991</h3>
-                <p>THAILOCK FASTENERS established</p>
-            </div>
-        </div>
-
-        <div class="timeline-item">
-            <div class="timeline-card">
-                <img src="iso.png">
-                <h3>2001</h3>
-                <p>ISO 9001 Certified</p>
-            </div>
-        </div>
-
-        <div class="timeline-item">
-            <div class="timeline-card">
-                <img src="iatf.png">
-                <h3>2012</h3>
-                <p>IATF16949 Certified</p>
-            </div>
-        </div>
-
-        <div class="timeline-item">
-            <div class="timeline-card">
-                <img src="factory2.jpg">
-                <h3>2020</h3>
-                <p>Rayong Factory Opened</p>
-            </div>
-        </div>
-
     </div>
 
-</section>
+    <section class="page-slider">
+        <div class="pages" id="pages">
+            <!-- PAGE 2 -->
+            <div class="page">
+                <video autoplay muted loop playsinline class="about-video">
+                    <source src="out.mp4" type="video/mp4">
+                </video>
+                <div class="page-overlay"></div>
+                <div class="about-content">
+                    <h2>GROUP COMPANIES</h2>
+                    <div class="company-wrapper">
+                        <div class="company-card">
+                            <img src="jingfong-logo.png" class="company-logo">
+                            <h3>JING FONG INDUSTRY</h3>
+                            <ul>
+                                <li>OEM / Special Nuts</li>
+                                <li>Tainan, Taiwan</li>
+                                <li>Capacity: >1,000 Tons / Month</li>
+                            </ul>
+                        </div>
+                        <div class="company-card">
+                            <img src="TL 1.png" class="company-logo">
+                            <h3>THAILOCK FASTENERS</h3>
+                            <ul>
+                                <li>Standard / OEM Fasteners</li>
+                                <li>2 Plants at Chonburi & Rayong</li>
+                                <li>Area: 70,000 m²</li>
+                            </ul>
+                        </div>
+                        <div class="company-card">
+                            <img src="thaimax-logo.png" class="company-logo">
+                            <h3>THAIMAX PLASTICS</h3>
+                            <ul>
+                                <li>Plastic Injection Parts</li>
+                                <li>Compound Material</li>
+                                <li>Rayong, Thailand</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button class="page-btn next-btn">❯</button>
+                </div>
+            </div>
 
-<button class="page-btn prev-btn">
-    ❮
-</button>
+            <!-- PAGE 3 -->
+            <div class="page products-page">
+                <section class="history-section">
+                    <h2>COMPANY HISTORY</h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-card">
+                                <img src="factory1.jpg">
+                                <h3>1980</h3>
+                                <p>JING FONG INDUSTRY was founded in Taiwan</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-card">
+                                <img src="TL 1.png">
+                                <h3>1991</h3>
+                                <p>THAILOCK FASTENERS established</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-card">
+                                <img src="iso.png">
+                                <h3>2001</h3>
+                                <p>ISO 9001 Certified</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-card">
+                                <img src="iatf.png">
+                                <h3>2012</h3>
+                                <p>IATF16949 Certified</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-card">
+                                <img src="factory2.jpg">
+                                <h3>2020</h3>
+                                <p>Rayong Factory Opened</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <button class="page-btn prev-btn">❮</button>
+            </div>
+        </div>
+    </section>
 
-</div>
-</div>
-</section>
+    <script>
+        // Timeline Animation
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) entry.target.classList.add("show");
+            });
+        }, { threshold: 0.3 });
+        document.querySelectorAll(".timeline-card").forEach(card => observer.observe(card));
 
-<script>
+        // Page Slider
+        const pages = document.getElementById("pages");
+        document.querySelector(".next-btn").addEventListener("click", () => pages.style.transform = "translateX(-100vw)");
+        document.querySelector(".prev-btn").addEventListener("click", () => pages.style.transform = "translateX(0)");
 
-const cards = document.querySelectorAll(".timeline-card");
-
-const observer = new IntersectionObserver(entries=>{
-
-    entries.forEach(entry=>{
-
-        if(entry.isIntersecting){
-
-            entry.target.classList.add("show");
-
-        }
-
-    });
-
-},{
-    threshold:0.3
-});
-
-cards.forEach(card=>observer.observe(card));
-
-</script>
-
-<script>
-const slider = document.getElementById("companySlider");
-
-document.querySelector(".next").addEventListener("click", () => {
-    slider.scrollBy({
-        left: 470,
-        behavior: "smooth"
-    });
-});
-
-document.querySelector(".prev").addEventListener("click", () => {
-    slider.scrollBy({
-        left: -470,
-        behavior: "smooth"
-    });
-});
-</script>
-
-<script>
-
-const pages = document.getElementById("pages");
-
-document.querySelector(".next-btn").addEventListener("click", () => {
-
-    pages.style.transform = "translateX(-100vw)";
-
-});
-
-document.querySelector(".prev-btn").addEventListener("click", () => {
-
-    pages.style.transform = "translateX(0)";
-
-});
-
-</script>
-
-
-<script>
-let lastScrollTop = 0;
-const navbar = document.querySelector(".navbar");
-
-window.addEventListener("scroll", function () {
-
-    let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-    if (currentScroll > 100) {
-        if (currentScroll > lastScrollTop) {
-            // เลื่อนลง
-            navbar.style.top = "-120px";
-        } else {
-            // เลื่อนขึ้น
-            navbar.style.top = "0";
-        }
-    } else {
-        // อยู่ช่วงบนสุดของหน้าเว็บ ให้แสดงเมนูเสมอ
-        navbar.style.top = "0";
-    }
-
-    lastScrollTop = currentScroll;
-});
-</script>
-
+        // Navbar Scroll Effect
+        let lastScrollTop = 0;
+        const navbar = document.querySelector(".navbar");
+        window.addEventListener("scroll", () => {
+            let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+            if (currentScroll > 100) {
+                navbar.style.top = currentScroll > lastScrollTop ? "-120px" : "0";
+            } else {
+                navbar.style.top = "0";
+            }
+            lastScrollTop = currentScroll;
+        });
+    </script>
 </body>
 </html>
