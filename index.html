@@ -364,75 +364,110 @@ body { font-family: Arial, sans-serif; overflow-x: hidden; background: #000814; 
     margin-bottom: 12px;
 }
 
-/* CONTACT - COMPACT FOOTER STYLE */
+/* CONTACT + GOOGLE MAPS */
 #contact {
-    min-height: 52vh;
-    padding: 75px 80px 32px;
+    min-height: 100vh;
+    padding: 110px 80px 40px;
     background:
+        radial-gradient(circle at 82% 18%, rgba(77,163,255,0.22), transparent 34%),
         linear-gradient(180deg, #00144d 0%, #000814 100%);
 }
 
-#contact::before {
-    background:
-        linear-gradient(120deg, rgba(255,255,255,0.06), transparent 35%),
-        repeating-linear-gradient(90deg, rgba(255,255,255,0.018) 0px, rgba(255,255,255,0.018) 1px, transparent 1px, transparent 95px);
-}
-
 #contact .info-content {
-    max-width: 1000px;
+    max-width: 1200px;
 }
 
 #contact h2 {
-    font-size: clamp(34px, 4vw, 46px);
-    margin-bottom: 18px;
+    font-size: clamp(36px, 4vw, 52px);
+    margin-bottom: 16px;
 }
 
 #contact .info-subtitle {
-    max-width: 680px;
-    margin: 0 auto 28px;
-    font-size: clamp(14px, 1.2vw, 17px);
-    line-height: 1.5;
+    max-width: 760px;
+    margin: 0 auto 36px;
+    font-size: clamp(15px, 1.2vw, 18px);
 }
 
 .contact-box {
     display: grid;
-    grid-template-columns: 0.9fr 1.1fr;
-    gap: 24px;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 28px;
+    align-items: stretch;
 }
 
-.contact-info,
+.location-card,
 .contact-form {
-    padding: 24px;
-    border-radius: 18px;
+    padding: 26px;
+    border-radius: 22px;
     background: rgba(255,255,255,0.08);
     border: 1px solid rgba(255,255,255,0.18);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 16px 34px rgba(0,0,0,0.22);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.25);
 }
 
-.contact-info h3 {
-    font-size: 20px;
+.location-card h3,
+.contact-form h3 {
+    font-size: 22px;
     margin-bottom: 14px;
 }
 
-.contact-info p {
+.location-card p {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    color: rgba(255,255,255,0.9);
+}
+
+.map-box {
+    width: 100%;
+    height: 300px;
+    margin: 18px 0;
+    overflow: hidden;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.map-box iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.map-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.map-btn {
+    display: inline-block;
+    padding: 11px 20px;
+    border-radius: 28px;
+    background: #4169E1;
+    color: white;
+    text-decoration: none;
     font-size: 14px;
-    line-height: 1.55;
-    margin-bottom: 8px;
-    color: rgba(255,255,255,0.88);
+    font-weight: bold;
+    border: 2px solid white;
+    transition: 0.3s;
+}
+
+.map-btn:hover {
+    background: white;
+    color: #00144d;
 }
 
 .contact-form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
 .contact-form input,
 .contact-form textarea {
     width: 100%;
-    padding: 10px 13px;
+    padding: 12px 14px;
     border: none;
     outline: none;
     border-radius: 10px;
@@ -441,13 +476,13 @@ body { font-family: Arial, sans-serif; overflow-x: hidden; background: #000814; 
 }
 
 .contact-form textarea {
-    min-height: 80px;
+    min-height: 120px;
     resize: vertical;
 }
 
 .contact-form button {
     align-self: flex-start;
-    padding: 10px 22px;
+    padding: 11px 24px;
     border: 2px solid white;
     border-radius: 28px;
     background: #4169E1;
@@ -467,8 +502,8 @@ body { font-family: Arial, sans-serif; overflow-x: hidden; background: #000814; 
     position: relative;
     z-index: 2;
     text-align: center;
-    margin-top: 24px;
-    padding-top: 18px;
+    margin-top: 34px;
+    padding-top: 20px;
     border-top: 1px solid rgba(255,255,255,0.14);
     font-size: 13px;
     color: rgba(255,255,255,0.65);
@@ -723,19 +758,30 @@ body { font-family: Arial, sans-serif; overflow-x: hidden; background: #000814; 
         font-size: 14px;
     }
 
-    .contact-info,
+    .location-card,
     .contact-form {
         padding: 20px;
         border-radius: 16px;
     }
 
-    .contact-info h3 {
+    .location-card h3,
+    .contact-form h3 {
         font-size: 18px;
     }
 
-    .contact-info p {
+    .location-card p {
         font-size: 13px;
         line-height: 1.5;
+    }
+
+    .map-box {
+        height: 260px;
+        border-radius: 14px;
+    }
+
+    .map-btn {
+        width: 100%;
+        text-align: center;
     }
 
     .footer-copy {
@@ -1007,21 +1053,42 @@ body { font-family: Arial, sans-serif; overflow-x: hidden; background: #000814; 
         <p class="info-subtitle">Contact our team for quotation requests, OEM fasteners, and business cooperation.</p>
 
         <div class="contact-box">
-            <div class="contact-info">
-                <h3>THAILOCK FASTENERS CO., LTD.</h3>
-                <p><strong>Location:</strong> Chonburi & Rayong, Thailand</p>
-                <p><strong>Email:</strong> sales@thailock.com</p>
-                <p><strong>Tel:</strong> +66-XXX-XXX-XXXX</p>
-                <p><strong>Products:</strong> Nuts, Screws, Bolts and OEM Fastener Solutions</p>
+
+            <div class="location-card">
+                <h3>STRATEGIC LOCATION</h3>
+                <p><strong>THAILOCK FASTENERS CO., LTD.</strong></p>
+                <p>Located in Thailand's Eastern Economic Corridor (EEC), near Laem Chabang Port and major industrial zones.</p>
+                <p><strong>Chonburi Plant:</strong> Near Laem Chabang Port</p>
+                <p><strong>Rayong Plant:</strong> New Production Plant</p>
+
+                <div class="map-box">
+                    <iframe
+                        src="https://www.google.com/maps?q=THAILOCK%20FASTENERS%20CO.%2C%20LTD.%20Chonburi%20Thailand&output=embed"
+                        loading="lazy"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+
+                <div class="map-buttons">
+                    <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=THAILOCK%20FASTENERS%20CO.%2C%20LTD.%20Chonburi%20Thailand" target="_blank">
+                        View Chonburi Plant
+                    </a>
+
+                    <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=THAILOCK%20FASTENERS%20Rayong%20Thailand" target="_blank">
+                        View Rayong Plant
+                    </a>
+                </div>
             </div>
 
             <form class="contact-form">
+                <h3>SEND MESSAGE</h3>
                 <input type="text" placeholder="Your Name">
                 <input type="email" placeholder="Your Email">
                 <input type="text" placeholder="Subject">
                 <textarea placeholder="Message"></textarea>
                 <button type="button">Send Message</button>
             </form>
+
         </div>
 
         <div class="footer-copy">© 2026 THAILOCK FASTENERS CO., LTD. All Rights Reserved.</div>
